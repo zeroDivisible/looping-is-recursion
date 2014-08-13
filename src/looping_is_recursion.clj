@@ -40,8 +40,18 @@
       (empty? coll) (/ s c)
       :else (recur (inc c) (+ s (first coll)) (rest coll)))))
 
+(defn toggle [a-set elem]
+  (if
+    (contains? a-set elem)
+    (disj a-set elem)
+    (conj a-set elem)))
+
 (defn parity [a-seq]
-  ":(")
+  (loop [output-coll #{}
+         input-coll a-seq]
+    (cond
+      (empty? input-coll) output-coll
+      :else (recur (toggle output-coll (first input-coll)) (rest input-coll)))))
 
 (defn fast-fibo [n]
   ":(")
