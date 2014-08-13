@@ -19,9 +19,9 @@
 (defn seq= [seq1 seq2]
   (cond
     (and (empty? seq1) (empty? seq2)) true
-    (or (empty? seq1) (empty? seq2)) false
-    (not= (first seq1) (first seq2)) false
-    :else (recur (rest seq1) (rest seq2))))
+                                      (or (empty? seq1) (empty? seq2)) false
+                                      (not= (first seq1) (first seq2)) false
+                                      :else (recur (rest seq1) (rest seq2))))
 
 (defn find-first-index [pred a-seq]
   (loop [i 0
@@ -29,8 +29,8 @@
          coll a-seq]
     (cond
       (empty? coll) nil
-      (f (first coll)) i
-      :else (recur (inc i) pred (rest coll)))))
+                    (f (first coll)) i
+                    :else (recur (inc i) pred (rest coll)))))
 
 (defn avg [a-seq]
   (loop [c 0
@@ -54,14 +54,22 @@
       :else (recur (toggle output-coll (first input-coll)) (rest input-coll)))))
 
 (defn fast-fibo [n]
-  (loop [curr n
-         fn 0
-         fprev 0]
-    (cond
-      (zero? curr) fn
-      (and (zero? fn) (zero? fprev)) (recur (dec curr) 1 0)
-      :else (recur (dec curr) (+ fn fprev) fn))))
+  (if
+    (< n 2)
+    n
+    (loop [curr n
+           fn 0
+           fprev 0]
+      (cond
+        (zero? curr) fn
+        (and (zero? fn) (zero? fprev)) (recur (dec curr) 1 0)
+        :else (recur (dec curr) (+ fn fprev) fn)))))
 
 (defn cut-at-repetition [a-seq]
-  [":("])
+  (loop [coll []
+         reminder a-seq]
+    (cond
+      (empty? reminder) coll
+      (some #{(first reminder)} coll) coll
+      :else (recur (conj coll (first reminder)) (rest reminder)))))
 
