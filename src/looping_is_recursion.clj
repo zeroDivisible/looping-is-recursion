@@ -54,7 +54,13 @@
       :else (recur (toggle output-coll (first input-coll)) (rest input-coll)))))
 
 (defn fast-fibo [n]
-  ":(")
+  (loop [curr n
+         fn 0
+         fprev 0]
+    (cond
+      (zero? curr) fn
+      (and (zero? fn) (zero? fprev)) (recur (dec curr) 1 0)
+      :else (recur (dec curr) (+ fn fprev) fn))))
 
 (defn cut-at-repetition [a-seq]
   [":("])
